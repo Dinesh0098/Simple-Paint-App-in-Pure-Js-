@@ -8,7 +8,13 @@
          <div id='canvas-container' width="100%">
             <canvas id="lower-canvas" style="border: 1px solid black"></canvas>
          </div>
-         <button onclick="clearCanvas()" style="font-weight: 600; width: 100px; letter-spacing: 1px; font-family: cursive; ">Reset</button>
+         <button onclick="clearCanvas()" style="font-weight: 600; width: 100px; letter-spacing: 1px; font-family: cursive; margin-top: 8px;">Reset</button>
+         <div style="padding: 8px; font-size: 14px; border: 1px solid cornflowerblue; margin-top: 8px; width: 800px; display: flex; flex-direction: column;">
+            <span style="color:cornflowerblue">* To duplicate the object press the control key and drag the object.</span>
+            <span style="color:cornflowerblue">* To change the object color press the alter key and click on the object.</span>
+            <span style="color:cornflowerblue">* To duplicate the object with new color press alter key + control key and drag the object.</span>
+            <span style="color:coral">* Object will not be deleted on double click if control key or alter key pressed.</span>
+         </div>
       </div>
    </body>
    <script src="main.js"></script>
