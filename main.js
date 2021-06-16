@@ -36,7 +36,7 @@ function doubleClickOnCanvas(event) {
   event.stopPropagation();
   const isObjectSelected = getActiveObject(event);
 
-  if (isObjectSelected) {
+  if (isObjectSelected && !event.altKey && !event.ctrlKey) {
     removeSelectedObjectAndRedraw(false);
   }
 }
@@ -101,14 +101,15 @@ function mouseMove(event) {
 function mouseDown(event) {
   event.preventDefault();
   event.stopPropagation();
+
   const isObjectSelected = getActiveObject(event);
   const { pointX, pointY } = getMouseDownPointer(event);
   startX = pointX;
   startY = pointY;
 
   if (!isObjectSelected) {
-    const fillColor =
-      "#" + ((Math.random() * 0xffffff) << 0).toString(16).padStart(6, "0");
+    const fillColor = getRandomColor();
+    console.log(fillColor)
 
     isDrawingModeOn = true;
 
@@ -124,6 +125,18 @@ function mouseDown(event) {
       isSelected: true,
     };
   } else {
+    // Duplicate object if control key is pressed.
+    if (event.ctrlKey) {
+      canvasObjects[activeObject.id].isSelected = false;
+      activeObject.id = canvasObjects.length;
+      canvasObjects.push(activeObject);
+    }
+
+    // Duplicate object if control key is pressed.
+    if (event.altKey) {
+      activeObject.fill = getRandomColor();
+    }
+
     removeSelectedObjectAndRedraw();
 
     upperCanvasContext.fillStyle = activeObject.fill;
@@ -176,6 +189,7 @@ function removeSelectedObjectAndRedraw(pushRemovedObject = true) {
   for (const index in canvasObjects) {
     if (!canvasObjects[index].isSelected) {
       canvasObjects[index].id = index;
+      console.log("aaa ", canvasObjects[index].fill);
       lowerCanvasContext.fillStyle = canvasObjects[index].fill;
       lowerCanvasContext.fillRect(
         canvasObjects[index].top,
@@ -215,4 +229,9 @@ upperCanvas.addEventListener("dblclick", doubleClickOnCanvas);
 function clearCanvas() {
   lowerCanvasContext.clearRect(0, 0, lowerCanvas.width, lowerCanvas.height);
   canvasObjects = [];
+}
+
+// Generate random string of length 6.
+function getRandomColor() {
+  return "#" + ((Math.random() * 0xffffff) << 0).toString(16).padStart(6, "0");
 }
