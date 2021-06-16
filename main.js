@@ -109,7 +109,6 @@ function mouseDown(event) {
 
   if (!isObjectSelected) {
     const fillColor = getRandomColor();
-    console.log(fillColor)
 
     isDrawingModeOn = true;
 
@@ -189,7 +188,6 @@ function removeSelectedObjectAndRedraw(pushRemovedObject = true) {
   for (const index in canvasObjects) {
     if (!canvasObjects[index].isSelected) {
       canvasObjects[index].id = index;
-      console.log("aaa ", canvasObjects[index].fill);
       lowerCanvasContext.fillStyle = canvasObjects[index].fill;
       lowerCanvasContext.fillRect(
         canvasObjects[index].top,
